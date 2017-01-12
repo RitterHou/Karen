@@ -1,4 +1,4 @@
-[org 0x7c00]            ; means all the address in this file is begining in 0x7c00
+[org 0x7c00]            ; means all the address in this file is begining in 0x7c00(equals to segment value is 0x7c0)
 
 mov ah, 0x0e            ; BIOS interupt 0x10 need ah is 0x0e, no reason
 
