@@ -62,7 +62,7 @@ bx_add:
     add bx, 1           ; bx plus one, means bx is pointing the next letter noe
     jmp print_string
 
-print_hex:
+print_hex:              ; this is reverse output.
     cmp dx, 0
     je  end
 
@@ -78,7 +78,7 @@ end:
     ret
 
 less_ten:
-    add cl, 30
+    add cl, 48
     mov al, cl
     mov ah, 0x0e
     int 0x10
