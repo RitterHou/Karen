@@ -1,12 +1,12 @@
 [org 0x7c00]
-mov [BOOT_DRIVE], dl ; BIOS stores our boot drive in DL, so it’s best to remember this for later.
+; mov [BOOT_DRIVE], dl ; BIOS stores our boot drive in DL, so it’s best to remember this for later.
 
 mov bp, 0x8000 ; Here we set our stack safely out of the
 mov sp, bp ; way, at 0x8000
 
 mov bx, 0x9000 ; Load 2 sectors to 0x0000(ES):0x9000(BX)
-mov dh, 2 ; from the boot disk. read 2 sectors from disk.
-mov dl, [BOOT_DRIVE]
+; mov dh, 2 ; from the boot disk. read 2 sectors from disk.
+; mov dl, [BOOT_DRIVE]
 
 call disk_load
 
@@ -22,18 +22,19 @@ jmp $
 
 ; load DH sectors to ES:BX from drive DL
 disk_load:
-    push dx ; Store DX on stack so later we can recall
+    ; push dx ; Store DX on stack so later we can recall
     ; how many sectors were request to be read,
     ; even if it is altered in the meantime
     mov ah, 0x02 ; BIOS read sector function
-    mov al, dh ; Read DH sectors
+    mov al, 2 ; Read DH sectors
     mov ch, 0x00 ; Select cylinder 0
     mov dh, 0x00 ; Select head 0
     mov cl, 0x02 ; Start reading from second sector (i.e. after the boot sector)
     int 0x13 ; BIOS interrupt
     jc disk_error ; Jump if error (i.e. carry flag set)
-    pop dx ; Restore DX from the stack
-    cmp dh, al ; if AL (sectors read) != DH (sectors expected)
+    ; pop dx ; Restore DX from the stack
+    mov bl, 2
+    cmp bl, al ; if AL (sectors read) != DH (sectors expected)
     jne disk_error1 ; display error message
     ret
 
@@ -94,7 +95,7 @@ BOOT:
     db 'Karen is booting...', 0
 
 ; Global variables
-BOOT_DRIVE: db 0
+; BOOT_DRIVE: db 0
 
 ; Bootsector padding
 times 510-($-$$) db 0
