@@ -15,6 +15,7 @@ qemu-system-i386 print_string.bin
 ```
 
 Switch from 16bit real mode to 32 protect mode:
+
 1. define a GDT and it will be loaded into memory;
 2. using `cli` to disable interrupts;
 3. using instruction `lgdt` then we can save the address of GDT into gdtr;
