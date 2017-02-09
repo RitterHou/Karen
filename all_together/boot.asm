@@ -7,12 +7,10 @@ call load_kernel
 
 call switch_to_pm
 
-jmp $
-
 %include "print_string.asm"
 %include "disk_load.asm"
-%include "gdt.asm"
 %include "switch_to_pm.asm"
+%include "gdt.asm"
 
 load_kernel:
     mov bx, LOADING_KERNEL
@@ -21,7 +19,7 @@ load_kernel:
     mov bx, KERNEL_OFFSET
     mov al, 15
     ; mov dl, [BOOT_DRIVE]
-    call disk_load
+    ; call disk_load
 
     ret
 

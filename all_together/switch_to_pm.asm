@@ -21,4 +21,41 @@ init_pm:
     mov ebp, 0x90000    ; 现在栈顶指向 0x90000
     mov esp, ebp
 
+    mov edx, VIDEO_MEMORY       ; 显存的初始地址
+    mov ax, 0
+    call clear_screen
+
+    mov ebx, STRING_PM          ; 被打印字符的地址
+    mov edx, VIDEO_MEMORY       ; 显存的初始地址
+    mov ah, WHITE_ON_BLACK      ; 设置文字的颜色
+    call print_string_pm
+
+    jmp $
+
+clear_screen:
+    cmp ax, 1000
+    je done
+    mov bx, 0
+    mov [edx], bx
+
+    add ax, 1
+    add edx, 2
+    jmp clear_screen
+
+
+print_string_pm:
+    mov al, [ebx]
+    cmp al, 0
+    je done
+    mov [edx], ax               ; al 为字符，ah 为颜色，修改显存对应位置的值即可显示字符
+
+    add ebx, 1          ; 字符的位置加一
+    add edx, 2          ; 显存的地址加二
+    jmp print_string_pm
+
+done:
     ret
+
+STRING_PM       db 'We are in pm now...', 0
+VIDEO_MEMORY    equ 0xb8000
+WHITE_ON_BLACK  equ 0x0f
