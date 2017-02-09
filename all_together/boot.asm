@@ -17,9 +17,9 @@ load_kernel:
     call print_string
 
     mov bx, KERNEL_OFFSET
-    mov al, 15
+    mov al, 2
     ; mov dl, [BOOT_DRIVE]
-    ; call disk_load
+    call disk_load
 
     ret
 
@@ -32,6 +32,8 @@ BEGIN_PM:
     mov edx, VIDEO_MEMORY       ; 显存的初始地址
     mov ah, WHITE_ON_BLACK      ; 设置文字的颜色
     call print_string_pm
+
+    call KERNEL_OFFSET
 
     jmp $
 

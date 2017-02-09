@@ -6,15 +6,21 @@ disk_load:
     mov dh, 0x00    ; CHS 中的 head 为 0
     mov cl, 0x02    ; 从第 2 个扇区开始读（即接在 bootsect 后面的扇区）
     int 0x13        ; 使用 BIOS 13 号中断开始从磁盘读数据到内存
-    jc disk_error   ; 中断调用时会设置 carry flag，如果未设置，则发生了错误
+    jc disk_error1  ; 中断调用时会设置 carry flag，如果未设置，则发生了错误
     mov bl, 2
     cmp bl, al      ; BIOS 在读取时会把真正读取到的扇区数赋给 al
-    jne disk_error  ; 如果 al 不为 2，则说明读取发生了错误
+    jne disk_error2 ; 如果 al 不为 2，则说明读取发生了错误
     ret
 
-disk_error:
-    mov bx, DISK_ERROR_MSG
+disk_error1:
+    mov bx, DISK_ERROR_MSG1
     call print_string
     jmp $
 
-DISK_ERROR_MSG  db 'DISK_ERROR_MSG', 0
+disk_error2:
+    mov bx, DISK_ERROR_MSG2
+    call print_string
+    jmp $
+
+DISK_ERROR_MSG1  db 'DISK_ERROR_MSG1', 0
+DISK_ERROR_MSG2  db 'DISK_ERROR_MSG2', 0
