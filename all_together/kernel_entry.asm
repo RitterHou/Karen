@@ -1,6 +1,6 @@
 ; Ensures that we jump straight into the kernel’s entry function.
-[bits 32] ; We’re in protected mode by now, so use 32-bit instructions.
-[extern main] ; Declate that we will be referencing the external symbol ’main’,
+; [bits 32] ; We’re in protected mode by now, so use 32-bit instructions.
+; [extern main] ; Declate that we will be referencing the external symbol ’main’,
 ; so the linker can substitute the final address
 
 mov ebx, STRING_PM          ; 被打印字符的地址
@@ -8,7 +8,7 @@ mov edx, VIDEO_MEMORY       ; 显存的初始地址
 mov ah, WHITE_ON_BLACK      ; 设置文字的颜色
 call print_string_pm
 
-call main ; invoke main() in our C kernel
+; call main ; invoke main() in our C kernel
 jmp $ ; Hang forever when we return from the kernel
 
 print_string_pm:

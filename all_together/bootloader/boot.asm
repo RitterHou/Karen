@@ -28,14 +28,12 @@ BEGIN_PM:
     mov ax, 0
     call clear_screen
 
-    ; mov ebx, STRING_PM          ; 被打印字符的地址
-    ; mov edx, VIDEO_MEMORY       ; 显存的初始地址
-    ; mov ah, WHITE_ON_BLACK      ; 设置文字的颜色
-    ; call print_string_pm
+    mov ebx, STRING_PM          ; 被打印字符的地址
+    mov edx, VIDEO_MEMORY       ; 显存的初始地址
+    mov ah, WHITE_ON_BLACK      ; 设置文字的颜色
+    call print_string_pm
 
-    call KERNEL_OFFSET
-
-    jmp $
+    jmp KERNEL_OFFSET
 
 
 BOOTING_MSG     db 'Karen is booting...', 0x0a, 0x0d, 0
