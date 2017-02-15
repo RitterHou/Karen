@@ -1,8 +1,8 @@
-void some_function() {
+/* This will force us to create a kernel entry function instead of jumping to kernel.c:0x00 */
+void dummy_test_entrypoint() {
 }
+
 void main() {
-    char* video_memory = 0xb8000;
+    char* video_memory = (char*) 0xb8000;
     *video_memory = 'X';
-    // Call some function
-    some_function();
 }
